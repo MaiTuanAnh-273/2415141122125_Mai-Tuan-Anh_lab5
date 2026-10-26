@@ -59,14 +59,50 @@ class MainActivity : AppCompatActivity() {
         val validationResult = validateAllFields(
             username, email, password, confirmPassword, phone, fullName
         )
+        if (!validationResult.isValid) {
+            showErrorSnackbar(validationResult.errorMessage)
+            return
+        }
+
+        registeredUser = User(username, email, password, phone, fullName)
+        showSuccessResult()
 
         if (!validationResult.isValid) {
             showErrorSnackbar(validationResult.errorMessage)
             return
         }
 
-        // TODO: Xử lý khi validation thành công (sẽ làm ở commit tiếp)
         Toast.makeText(this, "Validation passed!", Toast.LENGTH_SHORT).show()
+    }
+    private fun showSuccessResult() {
+        Toast.makeText(this, "✓ Đăng ký thành công!", Toast.LENGTH_SHORT).show()
+
+        Snackbar.make(
+            findViewById(android.R.id.content),
+            "✓ Chào mừng ${registeredUser?.username}!",
+            Snackbar.LENGTH_LONG
+        ).setBackgroundTint(Color.parseColor("#4CAF50"))
+            .setTextColor(Color.WHITE)
+            .show()
+
+        tvUserInfo.visibility = android.view.View.VISIBLE
+        tvUserInfo.text = """
+            ✓ ĐĂNG KÝ THÀNH CÔNG
+            
+            ${registeredUser.toString()}
+            
+            Thời gian: ${getCurrentDateTime()}
+        """.trimIndent()
+
+        val scrollView = findViewById<ScrollView>(android.R.id.content)
+        scrollView.post {
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        }
+    }
+
+    private fun getCurrentDateTime(): String {
+        val sdf = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss", java.util.Locale.getDefault())
+        return sdf.format(java.util.Date())
     }
 
     private fun validateAllFields(
