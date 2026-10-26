@@ -13,6 +13,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var edtPhone: EditText
     private lateinit var btnRegister: Button
     private lateinit var tvInfo: TextView
+    private lateinit var radioMale: RadioButton
+    private lateinit var radioFemale: RadioButton
+    private lateinit var radioGroup: RadioGroup
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         edtPhone = findViewById(R.id.edtPhone)
         btnRegister = findViewById(R.id.btnRegister)
         tvInfo = findViewById(R.id.tvInfo)
+        radioMale = findViewById(R.id.radioMale)
+        radioFemale = findViewById(R.id.radioFemale)
+        radioGroup = findViewById(R.id.radioGroup)
+
 
         edtMSSV.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus && edtMSSV.text.isEmpty()) {
@@ -52,7 +60,17 @@ class MainActivity : AppCompatActivity() {
         btnRegister.setOnClickListener {
             registerStudent()
         }
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val gender = when (checkedId) {
+                R.id.radioMale -> "Nam"
+                R.id.radioFemale -> "Nữ"
+                else -> "Chưa chọn"
+            }
+            Toast.makeText(this, "Giới tính: $gender", Toast.LENGTH_SHORT).show()
+        }
+
     }
+
 
     private fun registerStudent() {
         // Lấy dữ liệu từ EditText
@@ -60,6 +78,11 @@ class MainActivity : AppCompatActivity() {
         val hoTen = edtHoTen.text.toString().trim()
         val email = edtEmail.text.toString().trim()
         val phone = edtPhone.text.toString().trim()
+        val gender = when (radioGroup.checkedRadioButtonId) {
+            R.id.radioMale -> "Nam"
+            R.id.radioFemale -> "Nữ"
+            else -> "Chưa chọn"
+        }
 
         if (mssv.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập MSSV", Toast.LENGTH_SHORT).show()
@@ -80,6 +103,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show()
             return
         }
+
 
         val info = """
             THÔNG TIN SINH VIÊN

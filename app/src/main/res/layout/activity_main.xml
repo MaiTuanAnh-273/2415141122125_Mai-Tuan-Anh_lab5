@@ -99,6 +99,34 @@
             android:background="#E3F2FD"
             android:textColor="#000000"
             android:textSize="14sp"/>
+        <!-- Giới tính -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giới tính:"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nam"
+                android:layout_marginEnd="24dp"/>
+
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nữ"/>
+        </RadioGroup>
+
 
     </LinearLayout>
 </ScrollView>
